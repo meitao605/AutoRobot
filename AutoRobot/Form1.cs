@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Jai_FactoryDotNET;
+using SimpleTCP;
+using EasyModbus;
 
 namespace AutoRobot
 {
@@ -15,12 +17,35 @@ namespace AutoRobot
     {
         CFactory myFactory = new CFactory();
         CCamera myCamera;
-
         private string CameraName;
+
+        SimpleTcpClient AGVClient = new SimpleTcpClient();
+        ModbusClient RobotModbus = new ModbusClient("192.168.1.107", 502);
 
         public Form1()
         {
             InitializeComponent();
+
+            try
+            {
+                AGVClient.Connect("192.168.1.107", 60000);
+                AGVInfo.Text = "192.168.1.107:60000";
+            }
+            catch (Exception)
+            {
+                AGVInfo.Text = "AGV not connected";
+            }
+
+            try
+            {
+                RobotModbus.Connect();
+                RobotInfo.Text = "192.168.1.107:502";
+            }
+            catch (Exception)
+            {
+                RobotInfo.Text = "Robot not connected";
+            }
+
             Jai_FactoryWrapper.EFactoryError error = Jai_FactoryWrapper.EFactoryError.Success;
             error = myFactory.Open("");
             InitCamera();
@@ -59,38 +84,29 @@ namespace AutoRobot
             {
                 CameraName = myCamera.CameraID;
                 CameraName = CameraName.Substring(CameraName.Length - 10);
-                comboBox1.Items.Add(CameraName);
-                comboBox1.SelectedIndex = 0;
+                CameraInfo.Text =CameraName;
                 // Attach an event that will be called every time the Async Recording finishes
                 myCamera.AsyncImageRecordingDoneEvent += new CCamera.AsyncImageRecordingDoneHandler(myCamera_AsyncImageRecordingDoneEvent);
 
                 if (myCamera.NumOfDataStreams > 0)
                 {
                     Start.Enabled = true;
-                    Stop.Enabled = true;
                 }
                 else
                 {
                     Start.Enabled = false;
-                    Stop.Enabled = false;
                 } }
             else
             {
                 Start.Enabled = false;
-                Stop.Enabled = false;
                 MessageBox.Show("No Cameras Found!");
+                CameraInfo.Text = "No Cameras Found";
             }
         }
 
         private void Start_Click(object sender, EventArgs e)
         {
             StartCapture();
-        }
-
-        private void Stop_Click(object sender, EventArgs e)
-        {
-            if (myCamera != null)
-                myCamera.StopImageAcquisition();
         }
 
         private void StartCapture()
@@ -148,8 +164,9 @@ namespace AutoRobot
                                 error = Jai_FactoryWrapper.J_Image_FromRawToImage(ref ii, ref localImageInfo, 4096, 4096, 4096);
 
                         // Save the image to disk
-                        string time = System.DateTime.Now.Hour.ToString()+"-"+ System.DateTime.Now.Minute.ToString()+"-"+ System.DateTime.Now.Second.ToString();
+                                string time = System.DateTime.Now.Hour.ToString()+"-"+ System.DateTime.Now.Minute.ToString()+"-"+ System.DateTime.Now.Second.ToString();
                                 error = Jai_FactoryWrapper.J_Image_SaveFile(ref localImageInfo, ".\\RecordedImage" + time + ".tif");
+                                FullImageShowBox.Load(".\\RecordedImage" + time + ".tif");
 
                                 //Free the conversion buffer
                                 error = Jai_FactoryWrapper.J_Image_Free(ref localImageInfo);
@@ -163,6 +180,8 @@ namespace AutoRobot
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+
+            AGVClient.Disconnect();
             if (myCamera != null)
             {
                 myCamera.StopImageAcquisition();
@@ -178,5 +197,35 @@ namespace AutoRobot
         {
             InitCamera();
         }
+
+        private void ConnectAGV_Button_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                AGVClient.Connect("192.168.1.107", 60000);
+                AGVInfo.Text = "192.168.1.107:60000";
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("AGV not connected");
+                AGVInfo.Text = "AGV not connected";
+            }
+        }
+
+        private void ConnectRobot_Button_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                RobotModbus.Connect();
+                RobotInfo.Text = "192.168.1.107:502";
+            }
+            catch (Exception)
+            {
+                RobotInfo.Text = "Robot not connected";
+                MessageBox.Show("Robot not connected");
+            }
+        }
+
+
     }
 }
