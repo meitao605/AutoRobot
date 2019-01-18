@@ -182,6 +182,7 @@ namespace AutoRobot
         {
 
             AGVClient.Disconnect();
+            RobotModbus.Disconnect();
             if (myCamera != null)
             {
                 myCamera.StopImageAcquisition();
