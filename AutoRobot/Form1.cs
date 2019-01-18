@@ -22,10 +22,24 @@ namespace AutoRobot
         SimpleTcpClient AGVClient = new SimpleTcpClient();
         ModbusClient RobotModbus = new ModbusClient("192.168.1.107", 502);
 
+        Timer statemachinetimer = new Timer();
+
+        private enum Statemachine
+        {
+            idel,
+            AGVMoving,
+            RobotPick,
+            testing,
+            RobotReturn
+        }
+        Statemachine mystatemachine = Statemachine.idel;
+
         public Form1()
         {
             InitializeComponent();
-
+            statemachinetimer.Interval = 3000;
+            statemachinetimer.Tick += Statemachinetimer_Tick;
+            
             try
             {
                 AGVClient.Connect("192.168.1.107", 60000);
@@ -50,6 +64,34 @@ namespace AutoRobot
             error = myFactory.Open("");
             InitCamera();
             StartCamera();
+            statemachinetimer.Start();
+           
+        }
+
+
+        private void Statemachinetimer_Tick(object sender, EventArgs e)
+        {
+
+            switch (mystatemachine)
+            {
+                case Statemachine.idel:
+                    byte[] agvstring = {0x01, 0xAA, 0xB1, 0xDC, 0x10, 0xDD};
+                    AGVClient.Write(agvstring);
+                    break;
+                case Statemachine.AGVMoving:
+                    break;
+                case Statemachine.RobotPick:
+                    break;
+                case Statemachine.testing:
+                    break;
+                case Statemachine.RobotReturn:
+                    break;
+                default:
+                    break;
+            }
+
+            //StartCapture();
+            //  throw new NotImplementedException();
         }
 
         private void StartCamera()
@@ -180,7 +222,7 @@ namespace AutoRobot
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-
+            statemachinetimer.Stop();
             AGVClient.Disconnect();
             RobotModbus.Disconnect();
             if (myCamera != null)
@@ -227,6 +269,14 @@ namespace AutoRobot
             }
         }
 
+        private void Manual_Button_Click(object sender, EventArgs e)
+        {
+            Maintab.SelectedIndex = 1;
+        }
 
+        private void BacktoMain_Click(object sender, EventArgs e)
+        {
+            Maintab.SelectedIndex = 0;
+        }
     }
 }
