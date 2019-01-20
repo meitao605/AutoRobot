@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Jai_FactoryDotNET;
 using SimpleTCP;
 using EasyModbus;
+using System.Threading;
 
 namespace AutoRobot
 {
@@ -20,9 +21,10 @@ namespace AutoRobot
         private string CameraName;
 
         SimpleTcpClient AGVClient = new SimpleTcpClient();
+        private bool AGVconnected = false;
         ModbusClient RobotModbus = new ModbusClient("192.168.1.107", 502);
 
-        Timer statemachinetimer = new Timer();
+        System.Windows.Forms.Timer statemachinetimer = new System.Windows.Forms.Timer();
 
         private enum Statemachine
         {
@@ -44,10 +46,12 @@ namespace AutoRobot
             {
                 AGVClient.Connect("192.168.1.107", 60000);
                 AGVInfo.Text = "192.168.1.107:60000";
+                AGVconnected = true;
             }
             catch (Exception)
             {
                 AGVInfo.Text = "AGV not connected";
+                AGVconnected = false;
             }
 
             try
@@ -69,14 +73,21 @@ namespace AutoRobot
         }
 
 
+        /// <summary>
+        /// THis funtion doing the state machine for the main control logic.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
         private void Statemachinetimer_Tick(object sender, EventArgs e)
         {
 
             switch (mystatemachine)
             {
                 case Statemachine.idel:
-                    byte[] agvstring = {0x01, 0xAA, 0xB1, 0xDC, 0x10, 0xDD};
-                    AGVClient.Write(agvstring);
+                    //string bytesend = "000100000006010600020180";
+                    //byte[] agvstring = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x01, 0x06, 0x00, 0x02, 0x01, 0x80 };
+                    //AGVClient.Write(agvstring);
                     break;
                 case Statemachine.AGVMoving:
                     break;
@@ -247,11 +258,13 @@ namespace AutoRobot
             {
                 AGVClient.Connect("192.168.1.107", 60000);
                 AGVInfo.Text = "192.168.1.107:60000";
+                AGVconnected = true;
             }
             catch (Exception)
             {
                 MessageBox.Show("AGV not connected");
                 AGVInfo.Text = "AGV not connected";
+                AGVconnected = false;
             }
         }
 
@@ -277,6 +290,45 @@ namespace AutoRobot
         private void BacktoMain_Click(object sender, EventArgs e)
         {
             Maintab.SelectedIndex = 0;
+        }
+
+        private void AGVMoveLM1_Click(object sender, EventArgs e)
+        {
+            if(AGVconnected)
+            {
+                //string bytesend = "000100000006010600020180";
+                //byte[] agvstring = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x01, 0x06, 0x00, 0x02, 0x01, 0x80 };
+                AGVClient.Write(HexStringToString("5A0100010000000C0BEB000000000000")+ HexStringToString("7B226964223A22")+"LM1"+HexStringToString("227D"));
+
+                //wait for AGV finished the path, and then enable the buttons.
+                AGVMoveLM1.Enabled = false;
+                AGVMoveLM2.Enabled = false;
+                AGVMoveLM3.Enabled = false;
+                AGVMoveLM4.Enabled = false;
+
+                //here do this query work for agv.
+                Thread.Sleep(3000);
+
+                AGVMoveLM1.Enabled = true;
+                AGVMoveLM2.Enabled = true;
+                AGVMoveLM3.Enabled = true;
+                AGVMoveLM4.Enabled = true;
+
+
+            }
+        }
+
+
+        private string HexStringToString(string HexString)
+        {
+            string stringValue = "";
+            for (int i = 0; i < HexString.Length / 2; i++)
+            {
+                string hexChar = HexString.Substring(i * 2, 2);
+                int hexValue = Convert.ToInt32(hexChar, 16);
+                stringValue += Char.ConvertFromUtf32(hexValue);
+            }
+            return stringValue;
         }
     }
 }

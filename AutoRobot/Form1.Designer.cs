@@ -38,6 +38,7 @@
             this.ConnectRobot_Button = new System.Windows.Forms.Button();
             this.Maintab = new System.Windows.Forms.TabControl();
             this.tabpage1 = new System.Windows.Forms.TabPage();
+            this.Manual_Button = new System.Windows.Forms.Button();
             this.pictureBox8 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
@@ -47,9 +48,12 @@
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.AGVTest = new System.Windows.Forms.GroupBox();
-            this.Manual_Button = new System.Windows.Forms.Button();
             this.BacktoMain = new System.Windows.Forms.Button();
+            this.AGVTest = new System.Windows.Forms.GroupBox();
+            this.AGVMoveLM1 = new System.Windows.Forms.Button();
+            this.AGVMoveLM2 = new System.Windows.Forms.Button();
+            this.AGVMoveLM3 = new System.Windows.Forms.Button();
+            this.AGVMoveLM4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.FullImageShowBox)).BeginInit();
             this.Maintab.SuspendLayout();
             this.tabpage1.SuspendLayout();
@@ -62,6 +66,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage2.SuspendLayout();
+            this.AGVTest.SuspendLayout();
             this.SuspendLayout();
             // 
             // Start
@@ -185,6 +190,16 @@
             this.tabpage1.Text = "tabPage1";
             this.tabpage1.UseVisualStyleBackColor = true;
             // 
+            // Manual_Button
+            // 
+            this.Manual_Button.Location = new System.Drawing.Point(1716, 9);
+            this.Manual_Button.Name = "Manual_Button";
+            this.Manual_Button.Size = new System.Drawing.Size(165, 38);
+            this.Manual_Button.TabIndex = 5;
+            this.Manual_Button.Text = "Manual Test";
+            this.Manual_Button.UseVisualStyleBackColor = true;
+            this.Manual_Button.Click += new System.EventHandler(this.Manual_Button_Click);
+            // 
             // pictureBox8
             // 
             this.pictureBox8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -270,25 +285,6 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // AGVTest
-            // 
-            this.AGVTest.Location = new System.Drawing.Point(21, 26);
-            this.AGVTest.Name = "AGVTest";
-            this.AGVTest.Size = new System.Drawing.Size(427, 479);
-            this.AGVTest.TabIndex = 1;
-            this.AGVTest.TabStop = false;
-            this.AGVTest.Text = "AGVTest";
-            // 
-            // Manual_Button
-            // 
-            this.Manual_Button.Location = new System.Drawing.Point(1716, 9);
-            this.Manual_Button.Name = "Manual_Button";
-            this.Manual_Button.Size = new System.Drawing.Size(165, 38);
-            this.Manual_Button.TabIndex = 5;
-            this.Manual_Button.Text = "Manual Test";
-            this.Manual_Button.UseVisualStyleBackColor = true;
-            this.Manual_Button.Click += new System.EventHandler(this.Manual_Button_Click);
-            // 
             // BacktoMain
             // 
             this.BacktoMain.Location = new System.Drawing.Point(1711, 26);
@@ -298,6 +294,56 @@
             this.BacktoMain.Text = "Back";
             this.BacktoMain.UseVisualStyleBackColor = true;
             this.BacktoMain.Click += new System.EventHandler(this.BacktoMain_Click);
+            // 
+            // AGVTest
+            // 
+            this.AGVTest.Controls.Add(this.AGVMoveLM4);
+            this.AGVTest.Controls.Add(this.AGVMoveLM3);
+            this.AGVTest.Controls.Add(this.AGVMoveLM2);
+            this.AGVTest.Controls.Add(this.AGVMoveLM1);
+            this.AGVTest.Location = new System.Drawing.Point(21, 26);
+            this.AGVTest.Name = "AGVTest";
+            this.AGVTest.Size = new System.Drawing.Size(427, 479);
+            this.AGVTest.TabIndex = 1;
+            this.AGVTest.TabStop = false;
+            this.AGVTest.Text = "AGVTest";
+            // 
+            // AGVMoveLM1
+            // 
+            this.AGVMoveLM1.Location = new System.Drawing.Point(45, 214);
+            this.AGVMoveLM1.Name = "AGVMoveLM1";
+            this.AGVMoveLM1.Size = new System.Drawing.Size(144, 104);
+            this.AGVMoveLM1.TabIndex = 3;
+            this.AGVMoveLM1.Text = "MovetoLM1";
+            this.AGVMoveLM1.UseVisualStyleBackColor = true;
+            this.AGVMoveLM1.Click += new System.EventHandler(this.AGVMoveLM1_Click);
+            // 
+            // AGVMoveLM2
+            // 
+            this.AGVMoveLM2.Location = new System.Drawing.Point(235, 214);
+            this.AGVMoveLM2.Name = "AGVMoveLM2";
+            this.AGVMoveLM2.Size = new System.Drawing.Size(144, 104);
+            this.AGVMoveLM2.TabIndex = 3;
+            this.AGVMoveLM2.Text = "MovetoLM2";
+            this.AGVMoveLM2.UseVisualStyleBackColor = true;
+            // 
+            // AGVMoveLM3
+            // 
+            this.AGVMoveLM3.Location = new System.Drawing.Point(45, 347);
+            this.AGVMoveLM3.Name = "AGVMoveLM3";
+            this.AGVMoveLM3.Size = new System.Drawing.Size(144, 104);
+            this.AGVMoveLM3.TabIndex = 3;
+            this.AGVMoveLM3.Text = "MovetoLM3";
+            this.AGVMoveLM3.UseVisualStyleBackColor = true;
+            // 
+            // AGVMoveLM4
+            // 
+            this.AGVMoveLM4.Location = new System.Drawing.Point(235, 347);
+            this.AGVMoveLM4.Name = "AGVMoveLM4";
+            this.AGVMoveLM4.Size = new System.Drawing.Size(144, 104);
+            this.AGVMoveLM4.TabIndex = 3;
+            this.AGVMoveLM4.Text = "MovetoLM4";
+            this.AGVMoveLM4.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -324,6 +370,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPage2.ResumeLayout(false);
+            this.AGVTest.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -352,6 +399,10 @@
         private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.Button Manual_Button;
         private System.Windows.Forms.Button BacktoMain;
+        private System.Windows.Forms.Button AGVMoveLM4;
+        private System.Windows.Forms.Button AGVMoveLM3;
+        private System.Windows.Forms.Button AGVMoveLM2;
+        private System.Windows.Forms.Button AGVMoveLM1;
     }
 }
 
