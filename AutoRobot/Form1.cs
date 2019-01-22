@@ -12,6 +12,8 @@ using SimpleTCP;
 using EasyModbus;
 using System.Threading;
 
+
+
 namespace AutoRobot
 {
     public partial class Form1 : Form
@@ -19,10 +21,13 @@ namespace AutoRobot
         CFactory myFactory = new CFactory();
         CCamera myCamera;
         private string CameraName;
+        
 
         SimpleTcpClient AGVClient = new SimpleTcpClient();
         private bool AGVconnected = false;
-        ModbusClient RobotModbus = new ModbusClient("192.168.1.107", 502);
+        ModbusClient RobotModbus = new ModbusClient("192.168.192.10", 502);
+
+        string agv_message = "";
 
         System.Windows.Forms.Timer statemachinetimer = new System.Windows.Forms.Timer();
 
@@ -44,8 +49,8 @@ namespace AutoRobot
             
             try
             {
-                AGVClient.Connect("192.168.1.107", 60000);
-                AGVInfo.Text = "192.168.1.107:60000";
+                AGVClient.Connect("192.168.192.5", 19206);
+                AGVInfo.Text = "192.168.192.5";
                 AGVconnected = true;
             }
             catch (Exception)
@@ -218,8 +223,8 @@ namespace AutoRobot
 
                         // Save the image to disk
                                 string time = System.DateTime.Now.Hour.ToString()+"-"+ System.DateTime.Now.Minute.ToString()+"-"+ System.DateTime.Now.Second.ToString();
-                                error = Jai_FactoryWrapper.J_Image_SaveFile(ref localImageInfo, ".\\RecordedImage" + time + ".tif");
-                                FullImageShowBox.Load(".\\RecordedImage" + time + ".tif");
+                                error = Jai_FactoryWrapper.J_Image_SaveFile(ref localImageInfo, ".\\SR" + time + ".tif");
+                                FullImageShowBox.Load(".\\SR" + time + ".tif");
 
                                 //Free the conversion buffer
                                 error = Jai_FactoryWrapper.J_Image_Free(ref localImageInfo);
@@ -256,7 +261,7 @@ namespace AutoRobot
         {
             try
             {
-                AGVClient.Connect("192.168.1.107", 60000);
+                AGVClient.Connect("192.168.192.5", 19206);
                 AGVInfo.Text = "192.168.1.107:60000";
                 AGVconnected = true;
             }
@@ -298,7 +303,13 @@ namespace AutoRobot
             {
                 //string bytesend = "000100000006010600020180";
                 //byte[] agvstring = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x01, 0x06, 0x00, 0x02, 0x01, 0x80 };
-                AGVClient.Write(HexStringToString("5A0100010000000C0BEB000000000000")+ HexStringToString("7B226964223A22")+"LM1"+HexStringToString("227D"));
+
+                // string commands = HexStringToString("5A0100010000000C0BEB000000000000") + HexStringToString("7B226964223A22") + HexStringToString("4C4D33") + HexStringToString("227D");
+                //string commands = HexStringToString("5A0100010000000C0BEB0000000000007B226964223A224C4D31227D");
+
+                byte[] commands = { 0x5A,0x01,0x00,0x01,0x00,0x00,0x00,0x0C,0x0B,0xEB,0x00,0x00,0x00,0x00,0x00,0x00,0x7B,0x22,0x69,0x64,0x22,0x3A,0x22,0x4C,0x4D,0x31,0x22,0x7D };
+                AGVClient.Write(commands);
+                AGVClient.DataReceived += AGVClient_DataReceived;
 
                 //wait for AGV finished the path, and then enable the buttons.
                 AGVMoveLM1.Enabled = false;
@@ -318,17 +329,87 @@ namespace AutoRobot
             }
         }
 
-
-        private string HexStringToString(string HexString)
+        private void AGVClient_DataReceived(object sender, SimpleTCP.Message e)
         {
-            string stringValue = "";
-            for (int i = 0; i < HexString.Length / 2; i++)
-            {
-                string hexChar = HexString.Substring(i * 2, 2);
-                int hexValue = Convert.ToInt32(hexChar, 16);
-                stringValue += Char.ConvertFromUtf32(hexValue);
-            }
-            return stringValue;
+            agv_message += e.MessageString;
+            AGV_Status.Text = agv_message;
+           // throw new NotImplementedException();
         }
+
+        private void AGVMoveLM2_Click(object sender, EventArgs e)
+        {
+            if (AGVconnected)
+            {
+                //string bytesend = "000100000006010600020180";
+                //byte[] agvstring = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x01, 0x06, 0x00, 0x02, 0x01, 0x80 };
+
+                // string commands = HexStringToString("5A0100010000000C0BEB000000000000") + HexStringToString("7B226964223A22") + HexStringToString("4C4D33") + HexStringToString("227D");
+                //string commands = HexStringToString("5A0100010000000C0BEB0000000000007B226964223A224C4D31227D");
+
+                byte[] commands = { 0x5A, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x0C, 0x0B, 0xEB, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7B, 0x22, 0x69, 0x64, 0x22, 0x3A, 0x22, 0x4C, 0x4D, 0x32, 0x22, 0x7D };
+                AGVClient.Write(commands);
+                AGVClient.DataReceived += AGVClient_DataReceived;
+
+                //wait for AGV finished the path, and then enable the buttons.
+                AGVMoveLM1.Enabled = false;
+                AGVMoveLM2.Enabled = false;
+                AGVMoveLM3.Enabled = false;
+                AGVMoveLM4.Enabled = false;
+
+                //here do this query work for agv.
+                Thread.Sleep(3000);
+
+                AGVMoveLM1.Enabled = true;
+                AGVMoveLM2.Enabled = true;
+                AGVMoveLM3.Enabled = true;
+                AGVMoveLM4.Enabled = true;
+
+
+            }
+        }
+
+        private void AGVMoveLM3_Click(object sender, EventArgs e)
+        {
+            if (AGVconnected)
+            {
+                //string bytesend = "000100000006010600020180";
+                //byte[] agvstring = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x01, 0x06, 0x00, 0x02, 0x01, 0x80 };
+
+                // string commands = HexStringToString("5A0100010000000C0BEB000000000000") + HexStringToString("7B226964223A22") + HexStringToString("4C4D33") + HexStringToString("227D");
+                //string commands = HexStringToString("5A0100010000000C0BEB0000000000007B226964223A224C4D31227D");
+
+                byte[] commands = { 0x5A, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x0C, 0x0B, 0xEB, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7B, 0x22, 0x69, 0x64, 0x22, 0x3A, 0x22, 0x4C, 0x4D, 0x33, 0x22, 0x7D };
+                AGVClient.Write(commands);
+                AGVClient.DataReceived += AGVClient_DataReceived;
+
+                //wait for AGV finished the path, and then enable the buttons.
+                AGVMoveLM1.Enabled = false;
+                AGVMoveLM2.Enabled = false;
+                AGVMoveLM3.Enabled = false;
+                AGVMoveLM4.Enabled = false;
+
+                //here do this query work for agv.
+                Thread.Sleep(3000);
+
+                AGVMoveLM1.Enabled = true;
+                AGVMoveLM2.Enabled = true;
+                AGVMoveLM3.Enabled = true;
+                AGVMoveLM4.Enabled = true;
+
+            }
+        }
+
+        //private string HexStringToString(string HexString)
+        //{
+        //    string stringValue = "";
+        //    for (int i = 0; i < HexString.Length / 2; i++)
+        //    {
+        //        string hexChar = HexString.Substring(i * 2, 2);
+        //        int hexValue = Convert.ToInt32(hexChar, 16);
+        //        stringValue += Char.ConvertFromUtf32(hexValue);
+        //    }
+        //    return stringValue;
+        //}
+
     }
 }

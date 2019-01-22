@@ -48,12 +48,14 @@
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.BacktoMain = new System.Windows.Forms.Button();
             this.AGVTest = new System.Windows.Forms.GroupBox();
-            this.AGVMoveLM1 = new System.Windows.Forms.Button();
-            this.AGVMoveLM2 = new System.Windows.Forms.Button();
-            this.AGVMoveLM3 = new System.Windows.Forms.Button();
             this.AGVMoveLM4 = new System.Windows.Forms.Button();
+            this.AGVMoveLM3 = new System.Windows.Forms.Button();
+            this.AGVMoveLM2 = new System.Windows.Forms.Button();
+            this.AGVMoveLM1 = new System.Windows.Forms.Button();
+            this.AGV_Status = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.FullImageShowBox)).BeginInit();
             this.Maintab.SuspendLayout();
             this.tabpage1.SuspendLayout();
@@ -71,7 +73,7 @@
             // 
             // Start
             // 
-            this.Start.Location = new System.Drawing.Point(472, 26);
+            this.Start.Location = new System.Drawing.Point(1728, 93);
             this.Start.Margin = new System.Windows.Forms.Padding(4);
             this.Start.Name = "Start";
             this.Start.Size = new System.Drawing.Size(155, 72);
@@ -274,6 +276,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.groupBox1);
             this.tabPage2.Controls.Add(this.BacktoMain);
             this.tabPage2.Controls.Add(this.AGVTest);
             this.tabPage2.Controls.Add(this.Start);
@@ -284,6 +287,15 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Location = new System.Drawing.Point(509, 26);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(532, 479);
+            this.groupBox1.TabIndex = 3;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Robot Test";
             // 
             // BacktoMain
             // 
@@ -297,6 +309,7 @@
             // 
             // AGVTest
             // 
+            this.AGVTest.Controls.Add(this.AGV_Status);
             this.AGVTest.Controls.Add(this.AGVMoveLM4);
             this.AGVTest.Controls.Add(this.AGVMoveLM3);
             this.AGVTest.Controls.Add(this.AGVMoveLM2);
@@ -308,6 +321,35 @@
             this.AGVTest.TabStop = false;
             this.AGVTest.Text = "AGVTest";
             // 
+            // AGVMoveLM4
+            // 
+            this.AGVMoveLM4.Location = new System.Drawing.Point(235, 347);
+            this.AGVMoveLM4.Name = "AGVMoveLM4";
+            this.AGVMoveLM4.Size = new System.Drawing.Size(144, 104);
+            this.AGVMoveLM4.TabIndex = 3;
+            this.AGVMoveLM4.Text = "MovetoLM4";
+            this.AGVMoveLM4.UseVisualStyleBackColor = true;
+            // 
+            // AGVMoveLM3
+            // 
+            this.AGVMoveLM3.Location = new System.Drawing.Point(45, 347);
+            this.AGVMoveLM3.Name = "AGVMoveLM3";
+            this.AGVMoveLM3.Size = new System.Drawing.Size(144, 104);
+            this.AGVMoveLM3.TabIndex = 3;
+            this.AGVMoveLM3.Text = "MovetoLM3";
+            this.AGVMoveLM3.UseVisualStyleBackColor = true;
+            this.AGVMoveLM3.Click += new System.EventHandler(this.AGVMoveLM3_Click);
+            // 
+            // AGVMoveLM2
+            // 
+            this.AGVMoveLM2.Location = new System.Drawing.Point(235, 214);
+            this.AGVMoveLM2.Name = "AGVMoveLM2";
+            this.AGVMoveLM2.Size = new System.Drawing.Size(144, 104);
+            this.AGVMoveLM2.TabIndex = 3;
+            this.AGVMoveLM2.Text = "MovetoLM2";
+            this.AGVMoveLM2.UseVisualStyleBackColor = true;
+            this.AGVMoveLM2.Click += new System.EventHandler(this.AGVMoveLM2_Click);
+            // 
             // AGVMoveLM1
             // 
             this.AGVMoveLM1.Location = new System.Drawing.Point(45, 214);
@@ -318,32 +360,12 @@
             this.AGVMoveLM1.UseVisualStyleBackColor = true;
             this.AGVMoveLM1.Click += new System.EventHandler(this.AGVMoveLM1_Click);
             // 
-            // AGVMoveLM2
+            // AGV_Status
             // 
-            this.AGVMoveLM2.Location = new System.Drawing.Point(235, 214);
-            this.AGVMoveLM2.Name = "AGVMoveLM2";
-            this.AGVMoveLM2.Size = new System.Drawing.Size(144, 104);
-            this.AGVMoveLM2.TabIndex = 3;
-            this.AGVMoveLM2.Text = "MovetoLM2";
-            this.AGVMoveLM2.UseVisualStyleBackColor = true;
-            // 
-            // AGVMoveLM3
-            // 
-            this.AGVMoveLM3.Location = new System.Drawing.Point(45, 347);
-            this.AGVMoveLM3.Name = "AGVMoveLM3";
-            this.AGVMoveLM3.Size = new System.Drawing.Size(144, 104);
-            this.AGVMoveLM3.TabIndex = 3;
-            this.AGVMoveLM3.Text = "MovetoLM3";
-            this.AGVMoveLM3.UseVisualStyleBackColor = true;
-            // 
-            // AGVMoveLM4
-            // 
-            this.AGVMoveLM4.Location = new System.Drawing.Point(235, 347);
-            this.AGVMoveLM4.Name = "AGVMoveLM4";
-            this.AGVMoveLM4.Size = new System.Drawing.Size(144, 104);
-            this.AGVMoveLM4.TabIndex = 3;
-            this.AGVMoveLM4.Text = "MovetoLM4";
-            this.AGVMoveLM4.UseVisualStyleBackColor = true;
+            this.AGV_Status.Location = new System.Drawing.Point(45, 67);
+            this.AGV_Status.Name = "AGV_Status";
+            this.AGV_Status.Size = new System.Drawing.Size(334, 26);
+            this.AGV_Status.TabIndex = 4;
             // 
             // Form1
             // 
@@ -371,6 +393,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.AGVTest.ResumeLayout(false);
+            this.AGVTest.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -403,6 +426,8 @@
         private System.Windows.Forms.Button AGVMoveLM3;
         private System.Windows.Forms.Button AGVMoveLM2;
         private System.Windows.Forms.Button AGVMoveLM1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox AGV_Status;
     }
 }
 
