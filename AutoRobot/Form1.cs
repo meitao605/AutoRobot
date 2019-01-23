@@ -12,6 +12,8 @@ using SimpleTCP;
 using EasyModbus;
 using System.Threading;
 
+using System.Net.Sockets;
+
 
 
 namespace AutoRobot
@@ -21,11 +23,12 @@ namespace AutoRobot
         CFactory myFactory = new CFactory();
         CCamera myCamera;
         private string CameraName;
-        
 
-        SimpleTcpClient AGVClient = new SimpleTcpClient();
+        TcpClient AGVTcp = new TcpClient();
+
+      //  SimpleTcpClient AGVClient = new SimpleTcpClient();
         private bool AGVconnected = false;
-        ModbusClient RobotModbus = new ModbusClient("192.168.192.10", 502);
+        ModbusClient RobotModbus = new ModbusClient("192.168.1.107", 502);
 
         string agv_message = "";
 
@@ -47,10 +50,12 @@ namespace AutoRobot
             statemachinetimer.Interval = 3000;
             statemachinetimer.Tick += Statemachinetimer_Tick;
             
+      //      AGVClient.DataReceived += AGVClient_DataReceived;
+
             try
             {
-                AGVClient.Connect("192.168.192.5", 19206);
-                AGVInfo.Text = "192.168.192.5";
+                AGVTcp.Connect("192.168.1.107", 60000);
+                AGVInfo.Text = "192.168.1.107";
                 AGVconnected = true;
             }
             catch (Exception)
@@ -239,7 +244,8 @@ namespace AutoRobot
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             statemachinetimer.Stop();
-            AGVClient.Disconnect();
+            AGVTcp.Close();
+            //AGVClient.Disconnect();
             RobotModbus.Disconnect();
             if (myCamera != null)
             {
@@ -261,7 +267,7 @@ namespace AutoRobot
         {
             try
             {
-                AGVClient.Connect("192.168.192.5", 19206);
+                //AGVClient.Connect("192.168.1.107", 60000);
                 AGVInfo.Text = "192.168.1.107:60000";
                 AGVconnected = true;
             }
@@ -306,11 +312,24 @@ namespace AutoRobot
 
                 // string commands = HexStringToString("5A0100010000000C0BEB000000000000") + HexStringToString("7B226964223A22") + HexStringToString("4C4D33") + HexStringToString("227D");
                 //string commands = HexStringToString("5A0100010000000C0BEB0000000000007B226964223A224C4D31227D");
-
+                
                 byte[] commands = { 0x5A,0x01,0x00,0x01,0x00,0x00,0x00,0x0C,0x0B,0xEB,0x00,0x00,0x00,0x00,0x00,0x00,0x7B,0x22,0x69,0x64,0x22,0x3A,0x22,0x4C,0x4D,0x31,0x22,0x7D };
-                AGVClient.Write(commands);
-                AGVClient.DataReceived += AGVClient_DataReceived;
-
+                byte[] Tcpbuffer = new byte[256];
+                //AGVClient.Write(commands);
+                // AGVClient.DataReceived += AGVClient_DataReceived;
+                // AGVTcp.ReceiveTimeout = 3000;
+                
+                NetworkStream AGVStream = AGVTcp.GetStream();
+                AGVStream.Write(commands, 0, commands.Length);
+                try
+                {
+                    AGVStream.Read(Tcpbuffer, 0, Tcpbuffer.Length);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                               
                 //wait for AGV finished the path, and then enable the buttons.
                 AGVMoveLM1.Enabled = false;
                 AGVMoveLM2.Enabled = false;
@@ -324,7 +343,7 @@ namespace AutoRobot
                 AGVMoveLM2.Enabled = true;
                 AGVMoveLM3.Enabled = true;
                 AGVMoveLM4.Enabled = true;
-
+          //      AGVStream.Close();
 
             }
         }
@@ -347,9 +366,9 @@ namespace AutoRobot
                 //string commands = HexStringToString("5A0100010000000C0BEB0000000000007B226964223A224C4D31227D");
 
                 byte[] commands = { 0x5A, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x0C, 0x0B, 0xEB, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7B, 0x22, 0x69, 0x64, 0x22, 0x3A, 0x22, 0x4C, 0x4D, 0x32, 0x22, 0x7D };
-                AGVClient.Write(commands);
-                AGVClient.DataReceived += AGVClient_DataReceived;
-
+                
+              //  AGVClient.Write(commands);
+                //AGVClient.DataReceived += AGVClient_DataReceived;
                 //wait for AGV finished the path, and then enable the buttons.
                 AGVMoveLM1.Enabled = false;
                 AGVMoveLM2.Enabled = false;
@@ -379,8 +398,8 @@ namespace AutoRobot
                 //string commands = HexStringToString("5A0100010000000C0BEB0000000000007B226964223A224C4D31227D");
 
                 byte[] commands = { 0x5A, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x0C, 0x0B, 0xEB, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7B, 0x22, 0x69, 0x64, 0x22, 0x3A, 0x22, 0x4C, 0x4D, 0x33, 0x22, 0x7D };
-                AGVClient.Write(commands);
-                AGVClient.DataReceived += AGVClient_DataReceived;
+               // AGVClient.Write(commands);
+                //AGVClient.DataReceived += AGVClient_DataReceived;
 
                 //wait for AGV finished the path, and then enable the buttons.
                 AGVMoveLM1.Enabled = false;
