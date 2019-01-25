@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Jai_FactoryDotNET;
-using SimpleTCP;
 using EasyModbus;
 using System.Threading;
-
 using System.Net.Sockets;
 
 
@@ -23,19 +15,20 @@ namespace AutoRobot
         CFactory myFactory = new CFactory();
         CCamera myCamera;
         private string CameraName;
-
+        
         TcpClient AGVTcp = new TcpClient();
 
       //  SimpleTcpClient AGVClient = new SimpleTcpClient();
         private bool AGVconnected = false;
         ModbusClient RobotModbus = new ModbusClient("192.168.1.107", 502);
-
-        string agv_message = "";
+        
 
         System.Windows.Forms.Timer statemachinetimer = new System.Windows.Forms.Timer();
+        System.Windows.Forms.Timer Getrobottimer = new System.Windows.Forms.Timer();
 
         private enum Statemachine
         {
+            Init,
             idel,
             AGVMoving,
             RobotPick,
@@ -43,15 +36,21 @@ namespace AutoRobot
             RobotReturn
         }
         Statemachine mystatemachine = Statemachine.idel;
-
+        
         public Form1()
         {
             InitializeComponent();
             statemachinetimer.Interval = 3000;
             statemachinetimer.Tick += Statemachinetimer_Tick;
-            
-      //      AGVClient.DataReceived += AGVClient_DataReceived;
+            Getrobottimer.Interval = 1000;
+            Getrobottimer.Tick += Getrobottimer_Tick;
 
+            //      AGVClient.DataReceived += AGVClient_DataReceived;
+            for (int i = 0; i < 18; i++)
+            {
+                Positions.Items.Add("A" + (i + 1).ToString());
+            }
+            
             try
             {
                 AGVTcp.Connect("192.168.1.107", 60000);
@@ -82,6 +81,25 @@ namespace AutoRobot
            
         }
 
+        /// <summary>
+        /// this timer is going to read the status of the robot to confirm the UUT has been put and the robot
+        /// has already gone the the right position
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
+        private void Getrobottimer_Tick(object sender, EventArgs e)
+        {
+            int position = RobotModbus.ReadHoldingRegisters(135, 5)[3];
+
+            RobotStatus.Text = "The Robot Status is: " + position.ToString(); 
+            if(position == 1)
+            {
+                Getrobottimer.Stop();
+            }
+            //throw new NotImplementedException();
+        }
+
 
         /// <summary>
         /// THis funtion doing the state machine for the main control logic.
@@ -94,10 +112,11 @@ namespace AutoRobot
 
             switch (mystatemachine)
             {
+                case Statemachine.Init:
+
+                    break;
                 case Statemachine.idel:
-                    //string bytesend = "000100000006010600020180";
-                    //byte[] agvstring = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x01, 0x06, 0x00, 0x02, 0x01, 0x80 };
-                    //AGVClient.Write(agvstring);
+
                     break;
                 case Statemachine.AGVMoving:
                     break;
@@ -321,6 +340,7 @@ namespace AutoRobot
                 
                 NetworkStream AGVStream = AGVTcp.GetStream();
                 AGVStream.Write(commands, 0, commands.Length);
+
                 try
                 {
                     AGVStream.Read(Tcpbuffer, 0, Tcpbuffer.Length);
@@ -329,7 +349,9 @@ namespace AutoRobot
                 {
                     throw;
                 }
-                               
+
+                AGV_Status.Text = System.Text.Encoding.UTF8.GetString(Tcpbuffer);
+
                 //wait for AGV finished the path, and then enable the buttons.
                 AGVMoveLM1.Enabled = false;
                 AGVMoveLM2.Enabled = false;
@@ -348,12 +370,6 @@ namespace AutoRobot
             }
         }
 
-        private void AGVClient_DataReceived(object sender, SimpleTCP.Message e)
-        {
-            agv_message += e.MessageString;
-            AGV_Status.Text = agv_message;
-           // throw new NotImplementedException();
-        }
 
         private void AGVMoveLM2_Click(object sender, EventArgs e)
         {
@@ -417,6 +433,27 @@ namespace AutoRobot
 
             }
         }
+
+        private void RobotPick_Click(object sender, EventArgs e)
+        {
+            if(true)
+            {
+                int[] register = { 1, 2, 3, 4, 5 };
+                RobotModbus.WriteMultipleRegisters(130, register);
+            }
+            Getrobottimer.Start();
+        }
+
+        private void RobotReturn_Click(object sender, EventArgs e)
+        {
+            if (true)
+            {
+                int[] register = { 0, 0, 0, 0, 0 };
+                RobotModbus.WriteMultipleRegisters(130, register);
+            }
+        }
+
+
 
         //private string HexStringToString(string HexString)
         //{

@@ -49,13 +49,18 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.Positions = new System.Windows.Forms.ListBox();
             this.BacktoMain = new System.Windows.Forms.Button();
             this.AGVTest = new System.Windows.Forms.GroupBox();
+            this.AGV_Status = new System.Windows.Forms.TextBox();
             this.AGVMoveLM4 = new System.Windows.Forms.Button();
             this.AGVMoveLM3 = new System.Windows.Forms.Button();
             this.AGVMoveLM2 = new System.Windows.Forms.Button();
             this.AGVMoveLM1 = new System.Windows.Forms.Button();
-            this.AGV_Status = new System.Windows.Forms.TextBox();
+            this.RobotStatus = new System.Windows.Forms.TextBox();
+            this.RobotPick = new System.Windows.Forms.Button();
+            this.RobotReturn = new System.Windows.Forms.Button();
+            this.MochaMachine = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.FullImageShowBox)).BeginInit();
             this.Maintab.SuspendLayout();
             this.tabpage1.SuspendLayout();
@@ -68,17 +73,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.AGVTest.SuspendLayout();
             this.SuspendLayout();
             // 
             // Start
             // 
-            this.Start.Location = new System.Drawing.Point(1728, 93);
+            this.Start.Location = new System.Drawing.Point(1711, 122);
             this.Start.Margin = new System.Windows.Forms.Padding(4);
             this.Start.Name = "Start";
-            this.Start.Size = new System.Drawing.Size(155, 72);
+            this.Start.Size = new System.Drawing.Size(172, 77);
             this.Start.TabIndex = 0;
-            this.Start.Text = "Start";
+            this.Start.Text = "CameraCapture";
             this.Start.UseVisualStyleBackColor = true;
             this.Start.Click += new System.EventHandler(this.Start_Click);
             // 
@@ -105,7 +111,7 @@
             // 
             // CameraInfo
             // 
-            this.CameraInfo.Font = new System.Drawing.Font("SimSun", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.CameraInfo.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.CameraInfo.Location = new System.Drawing.Point(18, 9);
             this.CameraInfo.Margin = new System.Windows.Forms.Padding(4);
             this.CameraInfo.Name = "CameraInfo";
@@ -114,7 +120,7 @@
             // 
             // AGVInfo
             // 
-            this.AGVInfo.Font = new System.Drawing.Font("SimSun", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.AGVInfo.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AGVInfo.Location = new System.Drawing.Point(18, 60);
             this.AGVInfo.Margin = new System.Windows.Forms.Padding(4);
             this.AGVInfo.Name = "AGVInfo";
@@ -123,7 +129,7 @@
             // 
             // RobotInfo
             // 
-            this.RobotInfo.Font = new System.Drawing.Font("SimSun", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.RobotInfo.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.RobotInfo.Location = new System.Drawing.Point(18, 106);
             this.RobotInfo.Margin = new System.Windows.Forms.Padding(4);
             this.RobotInfo.Name = "RobotInfo";
@@ -276,6 +282,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.MochaMachine);
             this.tabPage2.Controls.Add(this.groupBox1);
             this.tabPage2.Controls.Add(this.BacktoMain);
             this.tabPage2.Controls.Add(this.AGVTest);
@@ -290,12 +297,25 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.RobotStatus);
+            this.groupBox1.Controls.Add(this.Positions);
+            this.groupBox1.Controls.Add(this.RobotReturn);
+            this.groupBox1.Controls.Add(this.RobotPick);
             this.groupBox1.Location = new System.Drawing.Point(509, 26);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(532, 479);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Robot Test";
+            // 
+            // Positions
+            // 
+            this.Positions.FormattingEnabled = true;
+            this.Positions.ItemHeight = 16;
+            this.Positions.Location = new System.Drawing.Point(23, 159);
+            this.Positions.Name = "Positions";
+            this.Positions.Size = new System.Drawing.Size(185, 292);
+            this.Positions.TabIndex = 0;
             // 
             // BacktoMain
             // 
@@ -320,6 +340,14 @@
             this.AGVTest.TabIndex = 1;
             this.AGVTest.TabStop = false;
             this.AGVTest.Text = "AGVTest";
+            // 
+            // AGV_Status
+            // 
+            this.AGV_Status.Location = new System.Drawing.Point(45, 41);
+            this.AGV_Status.Multiline = true;
+            this.AGV_Status.Name = "AGV_Status";
+            this.AGV_Status.Size = new System.Drawing.Size(334, 132);
+            this.AGV_Status.TabIndex = 4;
             // 
             // AGVMoveLM4
             // 
@@ -360,12 +388,42 @@
             this.AGVMoveLM1.UseVisualStyleBackColor = true;
             this.AGVMoveLM1.Click += new System.EventHandler(this.AGVMoveLM1_Click);
             // 
-            // AGV_Status
+            // RobotStatus
             // 
-            this.AGV_Status.Location = new System.Drawing.Point(45, 67);
-            this.AGV_Status.Name = "AGV_Status";
-            this.AGV_Status.Size = new System.Drawing.Size(334, 26);
-            this.AGV_Status.TabIndex = 4;
+            this.RobotStatus.Location = new System.Drawing.Point(23, 30);
+            this.RobotStatus.Multiline = true;
+            this.RobotStatus.Name = "RobotStatus";
+            this.RobotStatus.Size = new System.Drawing.Size(185, 109);
+            this.RobotStatus.TabIndex = 1;
+            // 
+            // RobotPick
+            // 
+            this.RobotPick.Location = new System.Drawing.Point(298, 177);
+            this.RobotPick.Name = "RobotPick";
+            this.RobotPick.Size = new System.Drawing.Size(144, 104);
+            this.RobotPick.TabIndex = 3;
+            this.RobotPick.Text = "RobotPick";
+            this.RobotPick.UseVisualStyleBackColor = true;
+            this.RobotPick.Click += new System.EventHandler(this.RobotPick_Click);
+            // 
+            // RobotReturn
+            // 
+            this.RobotReturn.Location = new System.Drawing.Point(298, 318);
+            this.RobotReturn.Name = "RobotReturn";
+            this.RobotReturn.Size = new System.Drawing.Size(144, 104);
+            this.RobotReturn.TabIndex = 3;
+            this.RobotReturn.Text = "RobotReturn";
+            this.RobotReturn.UseVisualStyleBackColor = true;
+            this.RobotReturn.Click += new System.EventHandler(this.RobotReturn_Click);
+            // 
+            // MochaMachine
+            // 
+            this.MochaMachine.Location = new System.Drawing.Point(1123, 26);
+            this.MochaMachine.Name = "MochaMachine";
+            this.MochaMachine.Size = new System.Drawing.Size(500, 479);
+            this.MochaMachine.TabIndex = 4;
+            this.MochaMachine.TabStop = false;
+            this.MochaMachine.Text = "MochaMachine";
             // 
             // Form1
             // 
@@ -373,7 +431,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1924, 1061);
             this.Controls.Add(this.Maintab);
-            this.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "AutoRobot";
@@ -392,6 +450,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPage2.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.AGVTest.ResumeLayout(false);
             this.AGVTest.PerformLayout();
             this.ResumeLayout(false);
@@ -428,6 +488,11 @@
         private System.Windows.Forms.Button AGVMoveLM1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox AGV_Status;
+        private System.Windows.Forms.ListBox Positions;
+        private System.Windows.Forms.TextBox RobotStatus;
+        private System.Windows.Forms.Button RobotReturn;
+        private System.Windows.Forms.Button RobotPick;
+        private System.Windows.Forms.GroupBox MochaMachine;
     }
 }
 
