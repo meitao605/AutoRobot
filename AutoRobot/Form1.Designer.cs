@@ -48,8 +48,12 @@
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.MochaMachine = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.RobotStatus = new System.Windows.Forms.TextBox();
             this.Positions = new System.Windows.Forms.ListBox();
+            this.RobotReturn = new System.Windows.Forms.Button();
+            this.RobotPick = new System.Windows.Forms.Button();
             this.BacktoMain = new System.Windows.Forms.Button();
             this.AGVTest = new System.Windows.Forms.GroupBox();
             this.AGV_Status = new System.Windows.Forms.TextBox();
@@ -57,10 +61,7 @@
             this.AGVMoveLM3 = new System.Windows.Forms.Button();
             this.AGVMoveLM2 = new System.Windows.Forms.Button();
             this.AGVMoveLM1 = new System.Windows.Forms.Button();
-            this.RobotStatus = new System.Windows.Forms.TextBox();
-            this.RobotPick = new System.Windows.Forms.Button();
-            this.RobotReturn = new System.Windows.Forms.Button();
-            this.MochaMachine = new System.Windows.Forms.GroupBox();
+            this.AGV_Speed = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.FullImageShowBox)).BeginInit();
             this.Maintab.SuspendLayout();
             this.tabpage1.SuspendLayout();
@@ -295,6 +296,15 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // MochaMachine
+            // 
+            this.MochaMachine.Location = new System.Drawing.Point(1123, 26);
+            this.MochaMachine.Name = "MochaMachine";
+            this.MochaMachine.Size = new System.Drawing.Size(500, 479);
+            this.MochaMachine.TabIndex = 4;
+            this.MochaMachine.TabStop = false;
+            this.MochaMachine.Text = "MochaMachine";
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.RobotStatus);
@@ -308,6 +318,14 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Robot Test";
             // 
+            // RobotStatus
+            // 
+            this.RobotStatus.Location = new System.Drawing.Point(23, 30);
+            this.RobotStatus.Multiline = true;
+            this.RobotStatus.Name = "RobotStatus";
+            this.RobotStatus.Size = new System.Drawing.Size(185, 109);
+            this.RobotStatus.TabIndex = 1;
+            // 
             // Positions
             // 
             this.Positions.FormattingEnabled = true;
@@ -316,6 +334,26 @@
             this.Positions.Name = "Positions";
             this.Positions.Size = new System.Drawing.Size(185, 292);
             this.Positions.TabIndex = 0;
+            // 
+            // RobotReturn
+            // 
+            this.RobotReturn.Location = new System.Drawing.Point(298, 318);
+            this.RobotReturn.Name = "RobotReturn";
+            this.RobotReturn.Size = new System.Drawing.Size(144, 104);
+            this.RobotReturn.TabIndex = 3;
+            this.RobotReturn.Text = "RobotReturn";
+            this.RobotReturn.UseVisualStyleBackColor = true;
+            this.RobotReturn.Click += new System.EventHandler(this.RobotReturn_Click);
+            // 
+            // RobotPick
+            // 
+            this.RobotPick.Location = new System.Drawing.Point(298, 177);
+            this.RobotPick.Name = "RobotPick";
+            this.RobotPick.Size = new System.Drawing.Size(144, 104);
+            this.RobotPick.TabIndex = 3;
+            this.RobotPick.Text = "RobotPick";
+            this.RobotPick.UseVisualStyleBackColor = true;
+            this.RobotPick.Click += new System.EventHandler(this.RobotPick_Click);
             // 
             // BacktoMain
             // 
@@ -329,6 +367,7 @@
             // 
             // AGVTest
             // 
+            this.AGVTest.Controls.Add(this.AGV_Speed);
             this.AGVTest.Controls.Add(this.AGV_Status);
             this.AGVTest.Controls.Add(this.AGVMoveLM4);
             this.AGVTest.Controls.Add(this.AGVMoveLM3);
@@ -343,10 +382,11 @@
             // 
             // AGV_Status
             // 
+            this.AGV_Status.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AGV_Status.Location = new System.Drawing.Point(45, 41);
             this.AGV_Status.Multiline = true;
             this.AGV_Status.Name = "AGV_Status";
-            this.AGV_Status.Size = new System.Drawing.Size(334, 132);
+            this.AGV_Status.Size = new System.Drawing.Size(144, 132);
             this.AGV_Status.TabIndex = 4;
             // 
             // AGVMoveLM4
@@ -388,42 +428,14 @@
             this.AGVMoveLM1.UseVisualStyleBackColor = true;
             this.AGVMoveLM1.Click += new System.EventHandler(this.AGVMoveLM1_Click);
             // 
-            // RobotStatus
+            // AGV_Speed
             // 
-            this.RobotStatus.Location = new System.Drawing.Point(23, 30);
-            this.RobotStatus.Multiline = true;
-            this.RobotStatus.Name = "RobotStatus";
-            this.RobotStatus.Size = new System.Drawing.Size(185, 109);
-            this.RobotStatus.TabIndex = 1;
-            // 
-            // RobotPick
-            // 
-            this.RobotPick.Location = new System.Drawing.Point(298, 177);
-            this.RobotPick.Name = "RobotPick";
-            this.RobotPick.Size = new System.Drawing.Size(144, 104);
-            this.RobotPick.TabIndex = 3;
-            this.RobotPick.Text = "RobotPick";
-            this.RobotPick.UseVisualStyleBackColor = true;
-            this.RobotPick.Click += new System.EventHandler(this.RobotPick_Click);
-            // 
-            // RobotReturn
-            // 
-            this.RobotReturn.Location = new System.Drawing.Point(298, 318);
-            this.RobotReturn.Name = "RobotReturn";
-            this.RobotReturn.Size = new System.Drawing.Size(144, 104);
-            this.RobotReturn.TabIndex = 3;
-            this.RobotReturn.Text = "RobotReturn";
-            this.RobotReturn.UseVisualStyleBackColor = true;
-            this.RobotReturn.Click += new System.EventHandler(this.RobotReturn_Click);
-            // 
-            // MochaMachine
-            // 
-            this.MochaMachine.Location = new System.Drawing.Point(1123, 26);
-            this.MochaMachine.Name = "MochaMachine";
-            this.MochaMachine.Size = new System.Drawing.Size(500, 479);
-            this.MochaMachine.TabIndex = 4;
-            this.MochaMachine.TabStop = false;
-            this.MochaMachine.Text = "MochaMachine";
+            this.AGV_Speed.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.AGV_Speed.Location = new System.Drawing.Point(235, 41);
+            this.AGV_Speed.Multiline = true;
+            this.AGV_Speed.Name = "AGV_Speed";
+            this.AGV_Speed.Size = new System.Drawing.Size(144, 132);
+            this.AGV_Speed.TabIndex = 4;
             // 
             // Form1
             // 
@@ -493,6 +505,7 @@
         private System.Windows.Forms.Button RobotReturn;
         private System.Windows.Forms.Button RobotPick;
         private System.Windows.Forms.GroupBox MochaMachine;
+        private System.Windows.Forms.TextBox AGV_Speed;
     }
 }
 
