@@ -6,6 +6,7 @@ using EasyModbus;
 using System.Threading;
 using System.Net.Sockets;
 using System.IO.Ports;
+using System.Collections;
 
 namespace AutoRobot
 {
@@ -19,9 +20,11 @@ namespace AutoRobot
         TcpClient AGVTcp = new TcpClient();
         TcpClient AGVTcpStatus = new TcpClient();
 
+        ArrayList AutoTestList = new ArrayList() ;
+        int Autotestindex = 0;
+
         private bool AGVconnected = false;
-        ModbusClient RobotModbus = new ModbusClient("134.64.230.204", 502);
-        
+        ModbusClient RobotModbus = new ModbusClient("192.168.1.107", 502);
 
         System.Windows.Forms.Timer statemachinetimer = new System.Windows.Forms.Timer();
         System.Windows.Forms.Timer Getrobottimer = new System.Windows.Forms.Timer();
@@ -60,12 +63,13 @@ namespace AutoRobot
             for (int i = 0; i < 18; i++)
             {
                 Positions.Items.Add("A" + (i + 1).ToString());
+                PositionAuto.Items.Add("A" + (i + 1).ToString());
             }
             
             try
             {
-                AGVTcp.Connect("134.64.230.204", 19206);
-                AGVInfo.Text = "134.64.230.204";
+                AGVTcp.Connect("192.168.1.107", 19206);
+                AGVInfo.Text = "192.168.1.107";
                 AGVconnected = true;
             }
             catch (Exception)
@@ -76,8 +80,8 @@ namespace AutoRobot
 
             try
             {
-                AGVTcpStatus.Connect("134.64.230.204", 19204);
-                AGVInfo.Text = "134.64.230.204";
+                AGVTcpStatus.Connect("192.168.1.107", 19204);
+                AGVInfo.Text = "192.168.1.107";
                 AGVconnected = true;
             }
             catch (Exception)
@@ -90,7 +94,7 @@ namespace AutoRobot
             try
             {
                 RobotModbus.Connect();
-                RobotInfo.Text = "134.64.230.204:502";
+                RobotInfo.Text = "192.168.1.107:502";
             }
             catch (Exception)
             {
@@ -215,12 +219,21 @@ namespace AutoRobot
             {
                 case Statemachine.Init:
                     init_simulation++;
-                    TestStatus.Text = "Here's Init AGV, Robot Mocha,Confirm they're in good state." + "Init time: " + init_simulation.ToString() ;
-                    if(init_simulation>3)
+
+                    if (AutoTestList.Count != 0)
                     {
-                        init_simulation = 0;
-                        mystatemachine = Statemachine.AGVMoving;
+                        TestStatus.Text = "Here's Init AGV, Robot Mocha,Confirm they're in good state." + "Init time: " + init_simulation.ToString();
+                        if (init_simulation > 3)
+                        {
+                            init_simulation = 0;
+                            mystatemachine = Statemachine.AGVMoving;
+                        }
                     }
+                    else
+                    {
+                        mystatemachine = Statemachine.idel;
+                    }
+
                     break;
                 case Statemachine.idel:
 
@@ -426,7 +439,7 @@ namespace AutoRobot
             try
             {
                 //AGVClient.Connect("192.168.1.107", 60000);
-                AGVInfo.Text = "134.64.230.204:19206";
+                AGVInfo.Text = "192.168.1.107:19206";
                 AGVconnected = true;
             }
             catch (Exception)
@@ -606,6 +619,11 @@ namespace AutoRobot
 
         private void CameraCalibration_Click(object sender, EventArgs e)
         {
+            foreach (var item in PositionAuto.SelectedItems)
+            {
+                AutoTestList.Add((string)item);
+            }
+            
             mystatemachine = Statemachine.Init;
         }
 
