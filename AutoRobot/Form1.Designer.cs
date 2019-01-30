@@ -38,6 +38,15 @@
             this.ConnectRobot_Button = new System.Windows.Forms.Button();
             this.Maintab = new System.Windows.Forms.TabControl();
             this.tabpage1 = new System.Windows.Forms.TabPage();
+            this.TestStatus = new System.Windows.Forms.TextBox();
+            this.imageType = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.TestInfo = new System.Windows.Forms.TextBox();
+            this.CameraCalibration = new System.Windows.Forms.Button();
             this.Manual_Button = new System.Windows.Forms.Button();
             this.pictureBox8 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
@@ -56,12 +65,12 @@
             this.RobotPick = new System.Windows.Forms.Button();
             this.BacktoMain = new System.Windows.Forms.Button();
             this.AGVTest = new System.Windows.Forms.GroupBox();
+            this.AGV_Speed = new System.Windows.Forms.TextBox();
             this.AGV_Status = new System.Windows.Forms.TextBox();
             this.AGVMoveLM4 = new System.Windows.Forms.Button();
             this.AGVMoveLM3 = new System.Windows.Forms.Button();
             this.AGVMoveLM2 = new System.Windows.Forms.Button();
             this.AGVMoveLM1 = new System.Windows.Forms.Button();
-            this.AGV_Speed = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.FullImageShowBox)).BeginInit();
             this.Maintab.SuspendLayout();
             this.tabpage1.SuspendLayout();
@@ -112,7 +121,7 @@
             // 
             // CameraInfo
             // 
-            this.CameraInfo.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.CameraInfo.Font = new System.Drawing.Font("SimSun", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.CameraInfo.Location = new System.Drawing.Point(18, 9);
             this.CameraInfo.Margin = new System.Windows.Forms.Padding(4);
             this.CameraInfo.Name = "CameraInfo";
@@ -121,7 +130,7 @@
             // 
             // AGVInfo
             // 
-            this.AGVInfo.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.AGVInfo.Font = new System.Drawing.Font("SimSun", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AGVInfo.Location = new System.Drawing.Point(18, 60);
             this.AGVInfo.Margin = new System.Windows.Forms.Padding(4);
             this.AGVInfo.Name = "AGVInfo";
@@ -130,7 +139,7 @@
             // 
             // RobotInfo
             // 
-            this.RobotInfo.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.RobotInfo.Font = new System.Drawing.Font("SimSun", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.RobotInfo.Location = new System.Drawing.Point(18, 106);
             this.RobotInfo.Margin = new System.Windows.Forms.Padding(4);
             this.RobotInfo.Name = "RobotInfo";
@@ -175,6 +184,15 @@
             // 
             // tabpage1
             // 
+            this.tabpage1.Controls.Add(this.TestStatus);
+            this.tabpage1.Controls.Add(this.imageType);
+            this.tabpage1.Controls.Add(this.label1);
+            this.tabpage1.Controls.Add(this.button4);
+            this.tabpage1.Controls.Add(this.button3);
+            this.tabpage1.Controls.Add(this.button2);
+            this.tabpage1.Controls.Add(this.button1);
+            this.tabpage1.Controls.Add(this.TestInfo);
+            this.tabpage1.Controls.Add(this.CameraCalibration);
             this.tabpage1.Controls.Add(this.Manual_Button);
             this.tabpage1.Controls.Add(this.pictureBox8);
             this.tabpage1.Controls.Add(this.pictureBox4);
@@ -199,11 +217,95 @@
             this.tabpage1.Text = "tabPage1";
             this.tabpage1.UseVisualStyleBackColor = true;
             // 
+            // TestStatus
+            // 
+            this.TestStatus.Location = new System.Drawing.Point(18, 161);
+            this.TestStatus.Multiline = true;
+            this.TestStatus.Name = "TestStatus";
+            this.TestStatus.Size = new System.Drawing.Size(518, 74);
+            this.TestStatus.TabIndex = 10;
+            // 
+            // imageType
+            // 
+            this.imageType.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.imageType.FormattingEnabled = true;
+            this.imageType.Items.AddRange(new object[] {
+            "rgb",
+            "bmp"});
+            this.imageType.Location = new System.Drawing.Point(1558, 189);
+            this.imageType.Name = "imageType";
+            this.imageType.Size = new System.Drawing.Size(309, 32);
+            this.imageType.TabIndex = 9;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Location = new System.Drawing.Point(1293, 192);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(202, 24);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "ImageTypeControl";
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(1727, 106);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(152, 56);
+            this.button4.TabIndex = 7;
+            this.button4.Text = "button1";
+            this.button4.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(1561, 106);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(152, 56);
+            this.button3.TabIndex = 7;
+            this.button3.Text = "button1";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(1395, 106);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(152, 56);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "button1";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1229, 106);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(152, 56);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // TestInfo
+            // 
+            this.TestInfo.Location = new System.Drawing.Point(571, 6);
+            this.TestInfo.Multiline = true;
+            this.TestInfo.Name = "TestInfo";
+            this.TestInfo.Size = new System.Drawing.Size(652, 229);
+            this.TestInfo.TabIndex = 6;
+            // 
+            // CameraCalibration
+            // 
+            this.CameraCalibration.Location = new System.Drawing.Point(1227, 27);
+            this.CameraCalibration.Name = "CameraCalibration";
+            this.CameraCalibration.Size = new System.Drawing.Size(320, 52);
+            this.CameraCalibration.TabIndex = 5;
+            this.CameraCalibration.Text = "CameraCalibration";
+            this.CameraCalibration.UseVisualStyleBackColor = true;
+            this.CameraCalibration.Click += new System.EventHandler(this.CameraCalibration_Click);
+            // 
             // Manual_Button
             // 
-            this.Manual_Button.Location = new System.Drawing.Point(1716, 9);
+            this.Manual_Button.Location = new System.Drawing.Point(1561, 27);
             this.Manual_Button.Name = "Manual_Button";
-            this.Manual_Button.Size = new System.Drawing.Size(165, 38);
+            this.Manual_Button.Size = new System.Drawing.Size(320, 52);
             this.Manual_Button.TabIndex = 5;
             this.Manual_Button.Text = "Manual Test";
             this.Manual_Button.UseVisualStyleBackColor = true;
@@ -380,9 +482,18 @@
             this.AGVTest.TabStop = false;
             this.AGVTest.Text = "AGVTest";
             // 
+            // AGV_Speed
+            // 
+            this.AGV_Speed.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.AGV_Speed.Location = new System.Drawing.Point(235, 41);
+            this.AGV_Speed.Multiline = true;
+            this.AGV_Speed.Name = "AGV_Speed";
+            this.AGV_Speed.Size = new System.Drawing.Size(144, 132);
+            this.AGV_Speed.TabIndex = 4;
+            // 
             // AGV_Status
             // 
-            this.AGV_Status.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.AGV_Status.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AGV_Status.Location = new System.Drawing.Point(45, 41);
             this.AGV_Status.Multiline = true;
             this.AGV_Status.Name = "AGV_Status";
@@ -428,22 +539,13 @@
             this.AGVMoveLM1.UseVisualStyleBackColor = true;
             this.AGVMoveLM1.Click += new System.EventHandler(this.AGVMoveLM1_Click);
             // 
-            // AGV_Speed
-            // 
-            this.AGV_Speed.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.AGV_Speed.Location = new System.Drawing.Point(235, 41);
-            this.AGV_Speed.Multiline = true;
-            this.AGV_Speed.Name = "AGV_Speed";
-            this.AGV_Speed.Size = new System.Drawing.Size(144, 132);
-            this.AGV_Speed.TabIndex = 4;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1924, 1061);
             this.Controls.Add(this.Maintab);
-            this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "AutoRobot";
@@ -506,6 +608,15 @@
         private System.Windows.Forms.Button RobotPick;
         private System.Windows.Forms.GroupBox MochaMachine;
         private System.Windows.Forms.TextBox AGV_Speed;
+        private System.Windows.Forms.TextBox TestInfo;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label label1;
+        internal System.Windows.Forms.ComboBox imageType;
+        private System.Windows.Forms.Button CameraCalibration;
+        private System.Windows.Forms.TextBox TestStatus;
     }
 }
 

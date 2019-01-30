@@ -20,13 +20,18 @@ namespace AutoRobot
         TcpClient AGVTcpStatus = new TcpClient();
 
         private bool AGVconnected = false;
-        ModbusClient RobotModbus = new ModbusClient("192.168.192.10", 502);
+        ModbusClient RobotModbus = new ModbusClient("134.64.230.204", 502);
         
 
         System.Windows.Forms.Timer statemachinetimer = new System.Windows.Forms.Timer();
         System.Windows.Forms.Timer Getrobottimer = new System.Windows.Forms.Timer();
         System.Windows.Forms.Timer agvstatustimer = new System.Windows.Forms.Timer();
 
+        int agv_simulation = 0;
+        int robotpick_simulation = 0;
+        int robotback_simulation = 0;
+        int test_simulation = 0;
+        int init_simulation = 0;
 
         private enum Statemachine
         {
@@ -59,8 +64,8 @@ namespace AutoRobot
             
             try
             {
-                AGVTcp.Connect("192.168.192.5", 19206);
-                AGVInfo.Text = "192.168.192.5";
+                AGVTcp.Connect("134.64.230.204", 19206);
+                AGVInfo.Text = "134.64.230.204";
                 AGVconnected = true;
             }
             catch (Exception)
@@ -71,8 +76,8 @@ namespace AutoRobot
 
             try
             {
-                AGVTcpStatus.Connect("192.168.192.5", 19204);
-                AGVInfo.Text = "192.168.192.5";
+                AGVTcpStatus.Connect("134.64.230.204", 19204);
+                AGVInfo.Text = "134.64.230.204";
                 AGVconnected = true;
             }
             catch (Exception)
@@ -85,7 +90,7 @@ namespace AutoRobot
             try
             {
                 RobotModbus.Connect();
-                RobotInfo.Text = "192.168.192.10:502";
+                RobotInfo.Text = "134.64.230.204:502";
             }
             catch (Exception)
             {
@@ -209,18 +214,54 @@ namespace AutoRobot
             switch (mystatemachine)
             {
                 case Statemachine.Init:
-
+                    init_simulation++;
+                    TestStatus.Text = "Here's Init AGV, Robot Mocha,Confirm they're in good state." + "Init time: " + init_simulation.ToString() ;
+                    if(init_simulation>3)
+                    {
+                        init_simulation = 0;
+                        mystatemachine = Statemachine.AGVMoving;
+                    }
                     break;
                 case Statemachine.idel:
 
+                    TestStatus.Text = "IDEL";
+
                     break;
                 case Statemachine.AGVMoving:
+                    agv_simulation++;
+                    TestStatus.Text = "Here's moving the AGV to LM1 before we start pick up UUT." + "AGV Time: " + agv_simulation.ToString();
+                    if(agv_simulation>9)
+                    {
+                        agv_simulation = 0;
+                        mystatemachine = Statemachine.RobotPick;
+                    }
                     break;
                 case Statemachine.RobotPick:
+                    robotpick_simulation++;
+                    TestStatus.Text = "Here's use the robot to pick up UUT to MoCha Machine" + "Robot Pick: " + robotpick_simulation.ToString();
+                    if (robotpick_simulation>9)
+                    {
+                        robotpick_simulation = 0;
+                        mystatemachine = Statemachine.testing;
+                    }
                     break;
                 case Statemachine.testing:
+                    test_simulation++;
+                    TestStatus.Text = "Mocha Testing geting the picture" + "picture Number: " + test_simulation.ToString();
+                    if (test_simulation > 9)
+                    {
+                        test_simulation = 0;
+                        mystatemachine = Statemachine.RobotReturn;
+                    }
                     break;
                 case Statemachine.RobotReturn:
+                    robotback_simulation++;
+                    TestStatus.Text = "Mocha Testing geting the picture" + "picture Number: " + robotback_simulation.ToString();
+                    if (robotback_simulation > 9)
+                    {
+                        robotback_simulation = 0;
+                        mystatemachine = Statemachine.idel;
+                    }
                     break;
                 default:
                     break;
@@ -360,6 +401,8 @@ namespace AutoRobot
         {
             statemachinetimer.Stop();
             AGVTcp.Close();
+            AGVTcpStatus.Close();
+            
             //AGVClient.Disconnect();
             RobotModbus.Disconnect();
             if (myCamera != null)
@@ -383,7 +426,7 @@ namespace AutoRobot
             try
             {
                 //AGVClient.Connect("192.168.1.107", 60000);
-                AGVInfo.Text = "192.168.192.5:19206";
+                AGVInfo.Text = "134.64.230.204:19206";
                 AGVconnected = true;
             }
             catch (Exception)
@@ -560,6 +603,15 @@ namespace AutoRobot
                 RobotModbus.WriteMultipleRegisters(130, register);
             }
         }
+
+        private void CameraCalibration_Click(object sender, EventArgs e)
+        {
+            mystatemachine = Statemachine.Init;
+        }
+
+
+
+
 
 
 
