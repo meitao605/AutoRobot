@@ -24,7 +24,7 @@ namespace AutoRobot
         int Autotestindex = 0;
 
         private bool AGVconnected = false;
-        ModbusClient RobotModbus = new ModbusClient("192.168.1.107", 502);
+        ModbusClient RobotModbus = new ModbusClient("192.168.192.10", 502);
 
         System.Windows.Forms.Timer statemachinetimer = new System.Windows.Forms.Timer();
         System.Windows.Forms.Timer Getrobottimer = new System.Windows.Forms.Timer();
@@ -68,8 +68,8 @@ namespace AutoRobot
             
             try
             {
-                AGVTcp.Connect("192.168.1.107", 19206);
-                AGVInfo.Text = "192.168.1.107";
+                AGVTcp.Connect("192.168.192.5", 19206);
+                AGVInfo.Text = "192.168.192.5";
                 AGVconnected = true;
             }
             catch (Exception)
@@ -80,8 +80,8 @@ namespace AutoRobot
 
             try
             {
-                AGVTcpStatus.Connect("192.168.1.107", 19204);
-                AGVInfo.Text = "192.168.1.107";
+                AGVTcpStatus.Connect("192.168.192.5", 19204);
+                AGVInfo.Text = "192.168.192.5";
                 AGVconnected = true;
             }
             catch (Exception)
@@ -94,7 +94,7 @@ namespace AutoRobot
             try
             {
                 RobotModbus.Connect();
-                RobotInfo.Text = "192.168.1.107:502";
+                RobotInfo.Text = "192.168.192.10:502";
             }
             catch (Exception)
             {
@@ -438,8 +438,8 @@ namespace AutoRobot
         {
             try
             {
-                //AGVClient.Connect("192.168.1.107", 60000);
-                AGVInfo.Text = "192.168.1.107:19206";
+                //AGVClient.Connect("192.168.192.5", 60000);
+                AGVInfo.Text = "192.168.192.5:19206";
                 AGVconnected = true;
             }
             catch (Exception)
@@ -455,7 +455,7 @@ namespace AutoRobot
             try
             {
                 RobotModbus.Connect();
-                RobotInfo.Text = "192.168.1.107:502";
+                RobotInfo.Text = "192.168.192.10:502";
             }
             catch (Exception)
             {
@@ -603,7 +603,10 @@ namespace AutoRobot
         {
             if(true)
             {
-                RobotModbus.WriteSingleRegister(130, 1);
+                RobotModbus.Connect();
+                RobotModbus.WriteSingleRegister(132, 1);
+                //RobotModbus.WriteSingleRegister(131, 1);
+                //RobotModbus.WriteSingleRegister(137, 1);
             }
             //Getrobottimer.Start();
         }
@@ -627,10 +630,27 @@ namespace AutoRobot
             mystatemachine = Statemachine.Init;
         }
 
+        private void ResetRobot_Click(object sender, EventArgs e)
+        {
+            RobotModbus.Connect();
+            int[] reset = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            if (true)
+            {
+                RobotModbus.WriteMultipleRegisters(130, reset);
+            }
 
+            //if(true)
+            //{
+            //    RobotModbus.WriteSingleRegister(131, 0);
+            //}
 
-
-
+            //if (true)
+            //{
+            //    RobotModbus.Connect();
+            //    int reg = RobotModbus.ReadHoldingRegisters(153, 1)[0];
+            //    MessageBox.Show(reg.ToString());
+            //}
+        }
 
 
         //private string HexStringToString(string HexString)

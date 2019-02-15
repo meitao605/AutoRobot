@@ -38,6 +38,7 @@
             this.ConnectRobot_Button = new System.Windows.Forms.Button();
             this.Maintab = new System.Windows.Forms.TabControl();
             this.tabpage1 = new System.Windows.Forms.TabPage();
+            this.PositionAuto = new System.Windows.Forms.ListBox();
             this.TestStatus = new System.Windows.Forms.TextBox();
             this.imageType = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -71,7 +72,7 @@
             this.AGVMoveLM3 = new System.Windows.Forms.Button();
             this.AGVMoveLM2 = new System.Windows.Forms.Button();
             this.AGVMoveLM1 = new System.Windows.Forms.Button();
-            this.PositionAuto = new System.Windows.Forms.ListBox();
+            this.ResetRobot = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.FullImageShowBox)).BeginInit();
             this.Maintab.SuspendLayout();
             this.tabpage1.SuspendLayout();
@@ -122,7 +123,7 @@
             // 
             // CameraInfo
             // 
-            this.CameraInfo.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.CameraInfo.Font = new System.Drawing.Font("SimSun", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.CameraInfo.Location = new System.Drawing.Point(18, 9);
             this.CameraInfo.Margin = new System.Windows.Forms.Padding(4);
             this.CameraInfo.Name = "CameraInfo";
@@ -131,7 +132,7 @@
             // 
             // AGVInfo
             // 
-            this.AGVInfo.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.AGVInfo.Font = new System.Drawing.Font("SimSun", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AGVInfo.Location = new System.Drawing.Point(18, 60);
             this.AGVInfo.Margin = new System.Windows.Forms.Padding(4);
             this.AGVInfo.Name = "AGVInfo";
@@ -140,7 +141,7 @@
             // 
             // RobotInfo
             // 
-            this.RobotInfo.Font = new System.Drawing.Font("宋体", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.RobotInfo.Font = new System.Drawing.Font("SimSun", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.RobotInfo.Location = new System.Drawing.Point(18, 106);
             this.RobotInfo.Margin = new System.Windows.Forms.Padding(4);
             this.RobotInfo.Name = "RobotInfo";
@@ -219,6 +220,16 @@
             this.tabpage1.Text = "tabPage1";
             this.tabpage1.UseVisualStyleBackColor = true;
             // 
+            // PositionAuto
+            // 
+            this.PositionAuto.FormattingEnabled = true;
+            this.PositionAuto.ItemHeight = 16;
+            this.PositionAuto.Location = new System.Drawing.Point(900, 6);
+            this.PositionAuto.Name = "PositionAuto";
+            this.PositionAuto.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.PositionAuto.Size = new System.Drawing.Size(323, 228);
+            this.PositionAuto.TabIndex = 11;
+            // 
             // TestStatus
             // 
             this.TestStatus.Location = new System.Drawing.Point(18, 161);
@@ -229,7 +240,7 @@
             // 
             // imageType
             // 
-            this.imageType.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.imageType.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.imageType.FormattingEnabled = true;
             this.imageType.Items.AddRange(new object[] {
             "rgb",
@@ -242,7 +253,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Font = new System.Drawing.Font("SimSun", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(1293, 192);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(202, 24);
@@ -414,6 +425,7 @@
             this.groupBox1.Controls.Add(this.RobotStatus);
             this.groupBox1.Controls.Add(this.Positions);
             this.groupBox1.Controls.Add(this.RobotReturn);
+            this.groupBox1.Controls.Add(this.ResetRobot);
             this.groupBox1.Controls.Add(this.RobotPick);
             this.groupBox1.Location = new System.Drawing.Point(509, 26);
             this.groupBox1.Name = "groupBox1";
@@ -486,7 +498,7 @@
             // 
             // AGV_Speed
             // 
-            this.AGV_Speed.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.AGV_Speed.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AGV_Speed.Location = new System.Drawing.Point(235, 41);
             this.AGV_Speed.Multiline = true;
             this.AGV_Speed.Name = "AGV_Speed";
@@ -495,7 +507,7 @@
             // 
             // AGV_Status
             // 
-            this.AGV_Status.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.AGV_Status.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.AGV_Status.Location = new System.Drawing.Point(45, 41);
             this.AGV_Status.Multiline = true;
             this.AGV_Status.Name = "AGV_Status";
@@ -541,15 +553,15 @@
             this.AGVMoveLM1.UseVisualStyleBackColor = true;
             this.AGVMoveLM1.Click += new System.EventHandler(this.AGVMoveLM1_Click);
             // 
-            // PositionAuto
+            // ResetRobot
             // 
-            this.PositionAuto.FormattingEnabled = true;
-            this.PositionAuto.ItemHeight = 16;
-            this.PositionAuto.Location = new System.Drawing.Point(900, 6);
-            this.PositionAuto.Name = "PositionAuto";
-            this.PositionAuto.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.PositionAuto.Size = new System.Drawing.Size(323, 228);
-            this.PositionAuto.TabIndex = 11;
+            this.ResetRobot.Location = new System.Drawing.Point(298, 35);
+            this.ResetRobot.Name = "ResetRobot";
+            this.ResetRobot.Size = new System.Drawing.Size(144, 104);
+            this.ResetRobot.TabIndex = 3;
+            this.ResetRobot.Text = "ResetRobot";
+            this.ResetRobot.UseVisualStyleBackColor = true;
+            this.ResetRobot.Click += new System.EventHandler(this.ResetRobot_Click);
             // 
             // Form1
             // 
@@ -557,7 +569,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1924, 1061);
             this.Controls.Add(this.Maintab);
-            this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "AutoRobot";
@@ -630,6 +642,7 @@
         private System.Windows.Forms.Button CameraCalibration;
         private System.Windows.Forms.TextBox TestStatus;
         private System.Windows.Forms.ListBox PositionAuto;
+        private System.Windows.Forms.Button ResetRobot;
     }
 }
 
